@@ -3,7 +3,11 @@ A set of examples for using Vectice.com software. The notebooks are seperated in
 
 The Vectice SDK documentation can be found [here](https://storage.googleapis.com/sdk-documentation/sdk/index.html)
 
-# Getting Started
+- [Getting Started](#getting-started)
+- [Integrations](#integrations) 
+  - [MLflow](#mlflow)
+
+## Getting Started
 
 ```
 pip install vectice
@@ -24,4 +28,27 @@ Once you've performed the data cleaning or any other actions you end the run by 
 ```python3
 outputs = [vectice.create_dataset_version().with_parent_name("DATASET_NAME_IN_VECTICE_APP")]
 vectice.end_run(outputs)
+```
+## Integrations
+
+### MLflow
+
+The Vectice API has MLflow integration and the possibility to either captcher metadata after a run or in a fully integrated manner. This can be achieved by using the Vectice API at a high level. 
+
+```python3
+inputs = [Vectice.create_dataset_version().with_parent_name("standalone").with_tag("a_tag", "a tag value")]
+# MLflow run
+Vectice.save_after_run(PROJECT_TOKEN, run, "MLflow", inputs)
+```
+
+The fully integrated use of MLflow with Vectice uses the Python context manager to easily leverage MLflow with the Vectice API. The mlflow metadata is leveraged by the Vectice API and autolog allows all the metadata to be captured. Furthermore, more parameters and metrics can be captured by using mlflow methods. 
+
+```python3
+mlflow.autolog()
+vectice = Vectice(project_token=PROJECT_TOKEN, lib="MLflow")
+vectice.create_run(MLFLOW_EXPERIMENT_NAME)
+
+with vectice.start_run(inputs=inputs):
+    mlflow.log_param("algorithm", "linear regression")
+    mlflow.log_metric("MAE", MAE)
 ```
