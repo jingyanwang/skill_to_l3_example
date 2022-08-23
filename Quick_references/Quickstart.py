@@ -22,9 +22,8 @@ if __name__ == '__main__':
    
 # To create an s3 dataset, you need to set up the credentials to have access to your data in S3 and you might have to install boto3 (!pip install boto3)
 # https://doc.vectice.com/integration/aws.html
-#os.environ["aws_access_key_id"] = "aws_access_key_id"
-#os.environ["aws_secret_access_key"] = "aws_secret_access_key"
-#os.environ["default_region_name"] = "region"
+#os.environ["AWS_ACCESS_KEY_ID"] = "AWS_ACCESS_KEY_ID"
+#os.environ["AWS_SECRET_ACCESS_KEY"] = "AWS_SECRET_ACCESS_KEY"
 
     #experiment.vectice.create_s3_dataset(
     #            uri=["s3://folder/file"], #S3 uri
